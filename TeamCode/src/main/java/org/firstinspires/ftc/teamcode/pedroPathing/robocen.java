@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -74,13 +75,14 @@ public class robocen extends LinearOpMode {
     DcMotor fr = null;
     DcMotor br = null;
 
-    DcMotor vacuum = null;
+    DcMotor intake = null;
     DcMotor lwheel = null;
     DcMotor rwheel = null;
 
 
     @Override
     public void runOpMode() {
+
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
@@ -89,9 +91,13 @@ public class robocen extends LinearOpMode {
         fr = hardwareMap.get(DcMotor.class, "fr");
         br = hardwareMap.get(DcMotor.class, "br");
 
-        vacuum = hardwareMap.dcMotor.get("vacuum"); //0
-        lwheel = hardwareMap.dcMotor.get("lwheel");// 1
-        rwheel = hardwareMap.dcMotor.get("rwheel");// 2
+        intake = hardwareMap.get(DcMotor.class, "intake"); //
+        lwheel = hardwareMap.get(DcMotor.class,"lwheel");//
+        rwheel = hardwareMap.get(DcMotor.class,"rwheel");//
+
+        RevHubOrientationOnRobot RevOrientation = new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -104,11 +110,11 @@ public class robocen extends LinearOpMode {
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
         fl.setDirection(DcMotor.Direction.FORWARD);
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        fr.setDirection(DcMotor.Direction.FORWARD);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        fr.setDirection(DcMotor.Direction.REVERSE);
         br.setDirection(DcMotor.Direction.REVERSE);
 
-        vacuum.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
         lwheel.setDirection(DcMotorSimple.Direction.FORWARD);
         rwheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -179,10 +185,17 @@ public class robocen extends LinearOpMode {
 
 
             if (gamepad2.a) {
-                vacuum.setPower(.5);
+                intake.setPower(.5);
             } else {
-                vacuum.setPower(0);
+                intake.setPower(0);
             }
+
+            if(gamepad2.y) {
+                intake.setPower(-.5);
+            } else {
+                intake.setPower(0);
+            }
+
 
             if (gamepad2.b) {
                 lwheel.setPower(-1);
@@ -191,7 +204,13 @@ public class robocen extends LinearOpMode {
                 lwheel.setPower(0);
                 rwheel.setPower(0);
             }
-
+            if (gamepad2.x) {
+                lwheel.setPower(1);
+                rwheel.setPower(1);
+            } else {
+                lwheel.setPower(0);
+                rwheel.setPower(0);
+            }
         }
 
 
