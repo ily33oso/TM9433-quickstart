@@ -13,6 +13,10 @@ public class auto extends LinearOpMode{
     DcMotor bl = null;//1 bot left
     DcMotor fr =  null;//2 fr
     DcMotor br =null; //3
+
+    DcMotor intake = null;
+    DcMotor lwheel = null;
+    DcMotor rwheel = null;
     ElapsedTime runtime = new ElapsedTime();
 
 
@@ -24,13 +28,21 @@ public class auto extends LinearOpMode{
         fr = hardwareMap.get(DcMotor.class, "fr");
         br = hardwareMap.get(DcMotor.class, "br");
 
+        intake = hardwareMap.get(DcMotor.class, "intake"); //
+        lwheel = hardwareMap.get(DcMotor.class,"lwheel");//
+        rwheel = hardwareMap.get(DcMotor.class,"rwheel");
+
 
 
         //set motor directions (adjust as needed for your robot)
         fl.setDirection(DcMotor.Direction.FORWARD);
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        fr.setDirection(DcMotor.Direction.FORWARD);
-        br.setDirection(DcMotor.Direction.FORWARD);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        fr.setDirection(DcMotor.Direction.REVERSE);
+        br.setDirection(DcMotor.Direction.REVERSE);
+
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        lwheel.setDirection(DcMotorSimple.Direction.FORWARD);
+        rwheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
